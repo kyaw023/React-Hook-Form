@@ -1,7 +1,7 @@
 
 import {User, Mail, Tv, FacebookIcon, InstagramIcon, PhoneIcon} from 'lucide-react';
 import  './LoginForm.css'
-import {useForm} from "react-hook-form";
+import {useFieldArray, useForm} from "react-hook-form";
 import React from "react";
 import {DevTool} from "@hookform/devtools";
 
@@ -15,6 +15,9 @@ interface FormValues{
     }
 
     phoneNumber : string[]
+    phoneLists : {
+        number : string
+    }[]
 }
 
 const LoginForm: React.FC = () => {
@@ -28,9 +31,19 @@ const LoginForm: React.FC = () => {
                 facebook : "kyaw khaing lynn",
                 instagram : "kyaw khaing lynn"
             },
-            phoneNumber : []
+            phoneNumber : [],
+            phoneLists : [
+                {
+                    number :"",
+                }
+            ]
         }
     });
+
+    const {append,remove,fields}  = useFieldArray({
+        control,
+        name : "phoneLists"
+    })
 
     const onSubmit = (data :FormValues) =>{
         console.log("formValue",data)
@@ -149,6 +162,42 @@ const LoginForm: React.FC = () => {
                         />
                         <p>{errors?.phoneNumber?.[1]?.message}</p>
                     </div>
+                     <div className={"input-group"} style={
+                         {
+                             gap : "10px",
+                             display : "flex",
+                             flexDirection : "column"
+                         }
+                     }>
+                         {
+                             fields.map((field,index)=>{
+                                 return(
+                                     <div key={field.id} style={
+                                         {
+                                             gap : "10px",
+                                             display : "flex",
+                                             flexDirection : "row",
+                                             alignItems : "center"
+                                         }
+                                     }>
+                                         <PhoneIcon className="icon"/>
+                                         <input
+                                             type="text"
+                                             id={"phoneLists"}
+                                             {...register(`phoneLists.${index}.number`)}
+                                             placeholder="phoneLists"
+                                         />
+                                         {
+                                             index > 0 && (
+                                                 <button type="button" onClick={() => remove(index)}>Remove</button>
+                                             )
+                                         }
+                                     </div>
+                                 )
+                             })
+                         }
+                         <button type="button" onClick={() => append({number : ""})}>Add</button>
+                     </div>
                     <button type="submit">Login</button>
                 </form>
                 <p className="signup-link">
