@@ -1,5 +1,5 @@
 
-import {User, Mail, Tv, FacebookIcon, InstagramIcon} from 'lucide-react';
+import {User, Mail, Tv, FacebookIcon, InstagramIcon, PhoneIcon} from 'lucide-react';
 import  './LoginForm.css'
 import {useForm} from "react-hook-form";
 import React from "react";
@@ -13,6 +13,8 @@ interface FormValues{
         facebook : string,
         instagram : string
     }
+
+    phoneNumber : string[]
 }
 
 const LoginForm: React.FC = () => {
@@ -25,7 +27,8 @@ const LoginForm: React.FC = () => {
             social : {
                 facebook : "kyaw khaing lynn",
                 instagram : "kyaw khaing lynn"
-            }
+            },
+            phoneNumber : []
         }
     });
 
@@ -100,10 +103,10 @@ const LoginForm: React.FC = () => {
                             type="social.instagram"
                             id={"social.instagram"}
                             {...register("social.instagram")}
-                            placeholder="Email"
+                            placeholder="Instagram"
 
                         />
-                        <p>{errors.email?.message}</p>
+                        <p>{errors?.social?.instagram?.message}</p>
                     </div>
                     <div className="input-group">
                         <FacebookIcon className="icon"/>
@@ -118,7 +121,33 @@ const LoginForm: React.FC = () => {
                             })}
                             placeholder="Channel"
                         />
-                        <p>{errors.channel?.message}</p>
+                        <p>{errors?.social?.facebook?.message}</p>
+                    </div>
+                    <div className="input-group">
+                        <PhoneIcon className="icon"/>
+                        <input
+                            type="text"
+                            id={"primary-phone"}
+                            {...register("phoneNumber.0")}
+                            placeholder="primary-phone"
+
+                        />
+                        <p>{errors?.phoneNumber?.[0]?.message}</p>
+                    </div>
+                    <div className="input-group">
+                        <PhoneIcon className="icon"/>
+                        <input
+                            type="text"
+                            id={"secondary-phone"}
+                            {...register("phoneNumber.1", {
+                                required: {
+                                    value: true,
+                                    message: "secondary-phone is Required"
+                                }
+                            })}
+                            placeholder="Channel"
+                        />
+                        <p>{errors?.phoneNumber?.[1]?.message}</p>
                     </div>
                     <button type="submit">Login</button>
                 </form>
