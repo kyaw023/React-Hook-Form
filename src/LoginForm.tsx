@@ -1,5 +1,5 @@
 
-import { User, Mail, Tv } from 'lucide-react';
+import {User, Mail, Tv, FacebookIcon, InstagramIcon} from 'lucide-react';
 import  './LoginForm.css'
 import {useForm} from "react-hook-form";
 import React from "react";
@@ -9,6 +9,10 @@ interface FormValues{
     username : string,
     email :string,
     channel :string
+    social : {
+        facebook : string,
+        instagram : string
+    }
 }
 
 const LoginForm: React.FC = () => {
@@ -17,7 +21,11 @@ const LoginForm: React.FC = () => {
         defaultValues : {
             username : "Sayar kyaw",
             email : "sayarkyaw@gmail.com",
-            channel : "The winter is coming"
+            channel : "The winter is coming",
+            social : {
+                facebook : "kyaw khaing lynn",
+                instagram : "kyaw khaing lynn"
+            }
         }
     });
 
@@ -32,18 +40,18 @@ const LoginForm: React.FC = () => {
                 <h2>Login</h2>
                 <form onSubmit={handleSubmit(onSubmit)} noValidate>
                     <div className="input-group">
-                        <User className="icon" />
+                        <User className="icon"/>
                         <input
                             type="text"
                             id={"username"}
                             {
-                              ...register("username",{
-                                  required : {
-                                      value : true,
-                                      message : "Username is required"
-                                  }
+                                ...register("username", {
+                                    required: {
+                                        value: true,
+                                        message: "Username is required"
+                                    }
 
-                              })
+                                })
                             }
                             placeholder="Username"
 
@@ -60,9 +68,9 @@ const LoginForm: React.FC = () => {
                                     value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
                                     message: 'Please enter a valid email address',
                                 },
-                                validate : {
-                                    notAdmin : (fieldValue) => {
-                                       return fieldValue !== "admin@gmail.com" || "Enter a different email"
+                                validate: {
+                                    notAdmin: (fieldValue) => {
+                                        return fieldValue !== "admin@gmail.com" || "Enter a different email"
                                     }
                                 }
                             })}
@@ -80,6 +88,32 @@ const LoginForm: React.FC = () => {
                                 required: {
                                     value: true,
                                     message: "Channel is Required"
+                                }
+                            })}
+                            placeholder="Channel"
+                        />
+                        <p>{errors.channel?.message}</p>
+                    </div>
+                    <div className="input-group">
+                        <InstagramIcon className="icon"/>
+                        <input
+                            type="social.instagram"
+                            id={"social.instagram"}
+                            {...register("social.instagram")}
+                            placeholder="Email"
+
+                        />
+                        <p>{errors.email?.message}</p>
+                    </div>
+                    <div className="input-group">
+                        <FacebookIcon className="icon"/>
+                        <input
+                            type="text"
+                            id={"channel"}
+                            {...register("social.facebook", {
+                                required: {
+                                    value: true,
+                                    message: "facebook is Required"
                                 }
                             })}
                             placeholder="Channel"
