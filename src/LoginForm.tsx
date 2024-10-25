@@ -36,6 +36,7 @@ const LoginForm: React.FC = () => {
                                       value : true,
                                       message : "Username is required"
                                   }
+
                               })
                             }
                             placeholder="Username"
@@ -53,11 +54,16 @@ const LoginForm: React.FC = () => {
                                     value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
                                     message: 'Please enter a valid email address',
                                 },
+                                validate : {
+                                    notAdmin : (fieldValue) => {
+                                       return fieldValue !== "admin@gmail.com" || "Enter a different email"
+                                    }
+                                }
                             })}
                             placeholder="Email"
 
                         />
-                        <p>{errors.username?.message}</p>
+                        <p>{errors.email?.message}</p>
                     </div>
                     <div className="input-group">
                         <Tv className="icon"/>
@@ -72,7 +78,7 @@ const LoginForm: React.FC = () => {
                             })}
                             placeholder="Channel"
                         />
-                        <p>{errors.username?.message}</p>
+                        <p>{errors.channel?.message}</p>
                     </div>
                     <button type="submit">Login</button>
                 </form>
