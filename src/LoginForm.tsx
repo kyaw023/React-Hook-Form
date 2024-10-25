@@ -13,7 +13,13 @@ interface FormValues{
 
 const LoginForm: React.FC = () => {
 
-    const {register,control,handleSubmit,formState : {errors}} = useForm<FormValues>();
+    const {register,control,handleSubmit,formState : {errors}} = useForm<FormValues>({
+        defaultValues : {
+            username : "Sayar kyaw",
+            email : "sayarkyaw@gmail.com",
+            channel : "The winter is coming"
+        }
+    });
 
     const onSubmit = (data :FormValues) =>{
         console.log("formValue",data)
